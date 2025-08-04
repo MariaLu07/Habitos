@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Health Diary - Seu Diário de Saúde Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'galaxy-primary': '#00FFFF', // cyan blue
+                        'galaxy-secondary': '#B399D4', // light purple
+                        'galaxy-accent': '#C1E1C1', // pastel green
+                        'galaxy-dark': '#0F172A',
+                        'galaxy-light': '#F8FAFC',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .accessibility-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .text-balance {
+            text-wrap: balance;
+        }
+        
+        @media (max-width: 640px) {
+            .mobile-stack {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="bg-galaxy-light text-gray-800 dark:bg-galaxy-dark dark:text-gray-200">
+    <!-- Accessibility Options -->
+    <div class="accessibility-btn bg-galaxy-primary text-white" id="accessibilityBtn">
+        <i class="fas fa-universal-access text-xl"></i>
+    </div>
+    
+    <div class="fixed bottom-20 right-20 hidden flex-col gap-2" id="accessibilityMenu">
+        <button class="p-2 rounded-full bg-galaxy-secondary text-white" title="Aumentar fonte" onclick="changeFontSize(1)">
+            <i class="fas fa-text-height"></i>
+        </button>
+        <button class="p-2 rounded-full bg-galaxy-accent text-gray-800" title="Diminuir fonte" onclick="changeFontSize(-1)">
+            <i class="fas fa-text-width"></i>
+        </button>
+        <button class="p-2 rounded-full bg-galaxy-primary text-white" title="Alto contraste" onclick="toggleHighContrast()">
+            <i class="fas fa-adjust"></i>
+        </button>
+    </div>
+    
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-galaxy-primary to-galaxy-secondary text-white py-6 px-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-star-and-crescent text-3xl"></i>
+                <h1 class="text-2xl md:text-3xl font-bold">Galaxy Health Diary</h1>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="themeToggle" class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                
+                <button class="bg-white text-galaxy-primary px-4 py-2 rounded-full font-medium hover:bg-opacity-90 transition">
+                    Entrar
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-12 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-balance">Seu diário de saúde completo na palma da sua mão</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-balance">
+                Acompanhe seus hábitos de saúde de forma simples e intuitiva. Galaxy Health Diary ajuda você a monitorar todos os aspectos do seu bem-estar.
+            </p>
+            <div class="flex justify-center gap-4 mobile-stack">
+                <button class="bg-galaxy-primary hover:bg-cyan-400 text-white px-6 py-3 rounded-full font-medium transition shadow-lg">
+                    Comece Agora <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+                <button class="border-2 border-galaxy-primary text-galaxy-primary dark:text-white px-6 py-3 rounded-full font-medium hover:bg-galaxy-primary hover:text-white transition">
+                    Saiba Mais <i class="fas fa-info-circle ml-2"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Features Grid -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-8 text-center">Acompanhe todos os aspectos da sua saúde</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Activity Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-primary/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-running text-galaxy-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Atividades Físicas</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Registre seus exercícios, duração e intensidade. Visualize seu progresso ao longo do tempo.
+                    </p>
+                    <button class="text-galaxy-primary hover:text-cyan-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Meals Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-secondary/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-utensils text-galaxy-secondary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Refeições</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Documente suas refeições principais e lanches. Adicione fotos e notas sobre cada refeição.
+                    </p>
+                    <button class="text-galaxy-secondary hover:text-purple-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Food Items Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-accent/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-apple-alt text-galaxy-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Itens Alimentares</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Crie um banco de dados dos alimentos que você consome regularmente com informações nutricionais.
+                    </p>
+                    <button class="text-galaxy-accent hover:text-green-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Sleep Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-primary/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-bed text-galaxy-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Registros de Sono</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Monitore a qualidade e duração do seu sono. Identifique padrões que afetam seu descanso.
+                    </p>
+                    <button class="text-galaxy-primary hover:text-cyan-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Water Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-secondary/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-tint text-galaxy-secondary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Consumo de Água</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Acompanhe sua hidratação diária com lembretes personalizados para atingir suas metas.
+                    </p>
+                    <button class="text-galaxy-secondary hover:text-purple-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Mood Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-accent/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-smile text-galaxy-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Registros de Humor</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Documente seu estado emocional ao longo do dia e identifique fatores que influenciam seu humor.
+                    </p>
+                    <button class="text-galaxy-accent hover:text-green-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Symptoms Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-primary/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-thermometer-half text-galaxy-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Tipos de Sintoma</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Categorize e acompanhe diferentes sintomas físicos que você experimenta regularmente.
+                    </p>
+                    <button class="text-galaxy-primary hover:text-cyan-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Symptom Records Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-secondary/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-clipboard-list text-galaxy-secondary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Registros de Sintomas</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Documente ocorrências específicas de sintomas com intensidade, duração e possíveis gatilhos.
+                    </p>
+                    <button class="text-galaxy-secondary hover:text-purple-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Medications Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-accent/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-pills text-galaxy-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Medicamentos</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Mantenha um registro dos medicamentos que você toma, com dosagens e horários.
+                    </p>
+                    <button class="text-galaxy-accent hover:text-green-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Medication Records Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md transition-all duration-300 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-galaxy-primary/10 p-3 rounded-full mr-4">
+                            <i class="fas fa-calendar-check text-galaxy-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Registros de Medicamentos</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Acompanhe quando você tomou cada medicamento e quaisquer efeitos colaterais observados.
+                    </p>
+                    <button class="text-galaxy-primary hover:text-cyan-600 font-medium flex items-center">
+                        Ver detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials -->
+        <section class="mb-12 bg-galaxy-primary/10 dark:bg-galaxy-primary/20 rounded-xl p-8">
+            <h2 class="text-2xl font-bold mb-8 text-center">O que nossos usuários dizem</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-galaxy-secondary flex items-center justify-center text-white text-xl font-bold mr-4">A</div>
+                        <div>
+                            <h4 class="font-semibold">Ana Clara</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "Finalmente encontrei um app que me ajuda a entender como meus hábitos afetam minha saúde. O acompanhamento de humor e sintomas foi revelador!"
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-galaxy-accent flex items-center justify-center text-gray-800 text-xl font-bold mr-4">R</div>
+                        <div>
+                            <h4 class="font-semibold">Ricardo</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "Como diabético, poder acompanhar alimentação, medicamentos e sintomas em um só lugar mudou completamente meu controle da doença."
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-galaxy-primary flex items-center justify-center text-white text-xl font-bold mr-4">M</div>
+                        <div>
+                            <h4 class="font-semibold">Mariana</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "A interface acessível e os lembretes me ajudaram a criar rotinas mais saudáveis. Meu médico adorou os relatórios detalhados!"
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="text-center py-12 px-4 bg-gradient-to-r from-galaxy-primary to-galaxy-secondary rounded-xl text-white">
+            <h2 class="text-3xl font-bold mb-4">Pronto para transformar sua saúde?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">
+                Comece hoje mesmo a acompanhar seus hábitos e descubra padrões que podem melhorar sua qualidade de vida.
+            </p>
+            <button class="bg-white text-galaxy-primary px-8 py-3 rounded-full font-bold hover:bg-opacity-90 transition shadow-lg">
+                Criar Minha Conta Gratuita
+            </button>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-900 py-8 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-star-and-crescent text-2xl text-galaxy-primary mr-2"></i>
+                        <span class="text-xl font-bold">Galaxy Health</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Seu companheiro digital para uma vida mais saudável e consciente.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Recursos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Acompanhamento de Hábitos</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Relatórios Personalizados</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Lembretes Inteligentes</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Integração com Wearables</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Acessibilidade</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Tamanho do Texto</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Alto Contraste</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Leitor de Tela</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-galaxy-primary transition">Navegação por Teclado</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Contato</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-galaxy-primary mr-2"></i>
+                            <span class="text-gray-600 dark:text-gray-400">contato@galaxyhealth.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-galaxy-primary mr-2"></i>
+                            <span class="text-gray-600 dark:text-gray-400">(11) 98765-4321</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-whatsapp text-galaxy-primary mr-2"></i>
+                            <span class="text-gray-600 dark:text-gray-400">(11) 98765-4321</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 dark:text-gray-400 mb-4 md:mb-0">
+                    © 2023 Galaxy Health Diary. Todos os direitos reservados.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-galaxy-primary transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-galaxy-primary transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-galaxy-primary transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-galaxy-primary transition">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        // Accessibility Menu Toggle
+        const accessibilityBtn = document.getElementById('accessibilityBtn');
+        const accessibilityMenu = document.getElementById('accessibilityMenu');
+        
+        accessibilityBtn.addEventListener('click', () => {
+            accessibilityMenu.classList.toggle('hidden');
+        });
+        
+        // Font Size Adjustment
+        function changeFontSize(direction) {
+            const html = document.documentElement;
+            const currentSize = parseFloat(window.getComputedStyle(html, null).getPropertyValue('font-size'));
+            const newSize = direction > 0 ? Math.min(currentSize * 1.1, 22) : Math.max(currentSize * 0.9, 14);
+            html.style.fontSize = newSize + 'px';
+            localStorage.setItem('fontSize', newSize);
+        }
+        
+        // Apply saved font size
+        const savedFontSize = localStorage.getItem('fontSize');
+        if (savedFontSize) {
+            document.documentElement.style.fontSize = savedFontSize + 'px';
+        }
+        
+        // High Contrast Mode
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            localStorage.setItem('highContrast', document.body.classList.contains('high-contrast') ? 'on' : 'off');
+            
+            if (document.body.classList.contains('high-contrast')) {
+                document.body.style.backgroundColor = '#000';
+                document.body.style.color = '#FFF';
+                document.querySelectorAll('header, footer, section').forEach(el => {
+                    el.style.backgroundColor = '#000';
+                    el.style.color = '#FFF';
+                });
+                document.querySelectorAll('.bg-white').forEach(el => {
+                    el.style.backgroundColor = '#000';
+                    el.style.color = '#FFF';
+                });
+            } else {
+                document.body.style.backgroundColor = '';
+                document.body.style.color = '';
+                document.querySelectorAll('header, footer, section').forEach(el => {
+                    el.style.backgroundColor = '';
+                    el.style.color = '';
+                });
+                document.querySelectorAll('.bg-white').forEach(el => {
+                    el.style.backgroundColor = '';
+                    el.style.color = '';
+                });
+                
+                // Reapply theme
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+        }
+        
+        // Check for saved high contrast preference
+        if (localStorage.getItem('highContrast') === 'on') {
+            toggleHighContrast();
+        }
+        
+        // Close accessibility menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!accessibilityBtn.contains(e.target) && !accessibilityMenu.contains(e.target)) {
+                accessibilityMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+        background-color: #e0f1ff;
+    }
+
+    .container {
+        padding: 50px 5%;
+        text-align: center;
+    }
+
+    .container h2 {
+        font-size: 48px;
+        color: #054a91;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+
+    }
+
+    .descricao {
+        background-color: #64b3e4;
+        border-radius: 40px;
+        padding: 50px;
+        max-width: 1350px;
+        font-size: 20px;
+        color: #000;
+        line-height: 1.8;
+    }
+
+    .cards {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 40px;
+    }
+
+    .card {
+        background-color: #3e8ebf;
+        border-radius: 40px;
+        padding: 25px;
+        flex: 1;
+        min-width: 250px;
+        max-width: 320px;
+        box-sizing: border-box;
+        line-height: 1.6;
+    }
+
+    .card h3 {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        font-size: 28px;
+    margin-bottom: 15px;
+    }
+
+    .card p {
+        font-size: 18px;
+        color: #000;
+    }
+
+    .pe{
+        margin: 0px;
+        background-color: #006494;
+        width: 100%;
+        display: flex;
+        height: 90px;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .pe p{
+      color: #ffffff;
+      text-align: center;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh;
+    }
+    
+    .oi{
+      text-align: center;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh;
+    }

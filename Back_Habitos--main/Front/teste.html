@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Refeições</title>
+  <style>
+
+body {
+  margin: 0;
+  padding: 24px;
+  background-color: #1e293b;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+  font-size: 22px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.card, .mood-card, .mood-form, .sleep-card {
+  background-color: #0f172a;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 12px;
+  position: relative;
+}
+
+.card-header, .card-footer, .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+}
+
+.item-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.emoji {
+  font-size: 36px;
+  text-align: center;
+}
+
+.mood-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.top-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.gray-button, .blue-button, .green-button, .pink-button, .add-button, .cancel, .save {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.gray-button { background-color: #334155; color: #ffffff; }
+.blue-button { background-color: #0ea5e9; color: #ffffff; }
+.green-button { background-color: #bbf7d0; color: #000; }
+.pink-button { background-color: #f5d0fe; color: #000; }
+
+.subtitle, .tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.card p, .sleep-card p {
+  margin: 8px 0;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #334155;
+  margin: 12px 0;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.red { background-color: #ef4444; }
+.orange { background-color: #f97316; }
+.blue { background-color: #3b82f6; }
+.green { background-color: #15803d; }
+.purple { background-color: #9333ea; }
+.gray { background-color: #475569; }
+
+.actions {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.edit { color: #0ea5e9; }
+.delete { color: #ef4444; }
+
+.progress-bar {
+  height: 12px;
+  background-color: #334155;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress, .progress-fill {
+  height: 100%;
+  background-color: #a7f3d0;
+  width: 75%;
+}
+
+.water-grid {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.left-column, .right-column {
+  flex: 1;
+  min-width: 300px;
+}
+
+.form-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.sleep-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.value {
+  margin-top: 4px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #334155;
+  text-align: left;
+}
+
+.emoji-options span {
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+  </style>
+</head>
+    <body>
+    <div class="container">
+        <h1>🍽️ Refeições</h1>
+        <button class="add-button">+ Adicionar Refeição</button>
+
+        <!-- Café da Manhã -->
+        <div class="card">
+        <div class="card-header">
+            <h2>☕ Café da Manhã</h2>
+            <span class="time">08:30 AM</span>
+        </div>
+        <ul class="item-list">
+            <li><span>Pão integral com queijo</span><span>250 kcal</span></li>
+            <li><span>Suco de laranja</span><span>120 kcal</span></li>
+            <li><span>Mamão</span><span>80 kcal</span></li>
+        </ul>
+        <div class="card-footer">
+            <strong>Total: 450 kcal</strong>
+            <div class="actions">
+            <button class="edit">✏️</button>
+            <button class="delete">🗑️</button>
+            </div>
+        </div>
+        </div>
+
+        <!-- Almoço -->
+        <div class="card">
+        <div class="card-header">
+            <h2>🍽️ Almoço</h2>
+            <span class="time">12:45 PM</span>
+        </div>
+        <ul class="item-list">
+            <li><span>Arroz integral</span><span>200 kcal</span></li>
+            <li><span>Feijão</span><span>150 kcal</span></li>
+            <li><span>Frango grelhado</span><span>250 kcal</span></li>
+            <li><span>Salada verde</span><span>50 kcal</span></li>
+        </ul>
+        <div class="card-footer">
+            <strong>Total: 650 kcal</strong>
+            <div class="actions">
+            <button class="edit">✏️</button>
+            <button class="delete">🗑️</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    
+    <div class="container">
+        <h1>🍎 Itens Alimentares</h1>
+        <button class="add-button">+ Adicionar Item</button>
+        <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Porção</th>
+                <th>Calorias</th>
+                <th>Carboidratos</th>
+                <th>Proteínas</th>
+                <th>Gorduras</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Arroz integral</strong></td>
+                <td>100g</td>
+                <td>124</td>
+                <td>25.6g</td>
+                <td>2.7g</td>
+                <td>0.9g</td>
+                <td class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Peito de frango</strong></td>
+                <td>100g</td>
+                <td>165</td>
+                <td>0g</td>
+                <td>31g</td>
+                <td>3.6g</td>
+                <td class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Maçã</strong></td>
+                <td>1 média (182g)</td>
+                <td>95</td>
+                <td>25g</td>
+                <td>0.5g</td>
+                <td>0.3g</td>
+                <td class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    
+    
+    <div class="container">
+        <h1>🛏️ Registros de Sono</h1>
+        <button class="add-button">+ Adicionar Registro</button>
+
+        <div class="sleep-card">
+        <div class="card-header">
+            <h2>Noite de Sono</h2>
+            <span class="date-label">Ontem</span>
+        </div>
+
+        <div class="sleep-info">
+            <div>
+            <span class="label">Início</span>
+            <div class="value">23:15</div>
+            </div>
+            <div>
+            <span class="label">Término</span>
+            <div class="value">06:45</div>
+            </div>
+            <div>
+            <span class="label">Duração</span>
+            <div class="value">7h 30min</div>
+            </div>
+            <div>
+            <span class="label">Qualidade</span>
+            <div class="stars">⭐ ⭐ ⭐ ⭐ ☆</div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="obs">Observações: Acordei uma vez durante a noite</div>
+
+        <div class="actions">
+            <button class="edit">✏️</button>
+            <button class="delete">🗑️</button>
+        </div>
+        </div>
+    </div>
+    
+    
+    <div class="container">
+        <h1>💧 Consumo de Água</h1>
+        <button class="add-button">+ Adicionar Registro</button>
+
+        <div class="water-grid">
+
+        <!-- Coluna da esquerda -->
+        <div class="left-column">
+            <div class="meta-box">
+            <div class="meta-header">
+                <span>Meta Diária</span>
+                <div class="drop-icon">💧</div>
+            </div>
+            <div class="meta-value"><strong>1.5L / 2.0L</strong></div>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            </div>
+
+            <!-- Lista de registros -->
+            <div class="water-entry">
+            <div>
+                <strong>250ml</strong><br />
+                <span class="time">08:30 AM</span>
+            </div>
+            <div class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+            </div>
+            </div>
+
+            <div class="water-entry">
+            <div>
+                <strong>500ml</strong><br />
+                <span class="time">12:15 PM</span>
+            </div>
+            <div class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+            </div>
+            </div>
+
+            <div class="water-entry">
+            <div>
+                <strong>750ml</strong><br />
+                <span class="time">15:45 PM</span>
+            </div>
+            <div class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+            </div>
+            </div>
+        </div>
+
+        <!-- Coluna da direita -->
+        <div class="right-column">
+            <h2>Adicionar Consumo de Água</h2>
+
+            <label>Quantidade (ml)</label>
+            <input type="text" placeholder="Digite a quantidade" />
+
+            <label>Horário</label>
+            <input type="time" />
+
+            <div class="form-actions">
+            <button class="cancel">Cancelar</button>
+            <button class="save">Salvar Registro</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    
+    <div class="container">
+        <h1>😊 Registros de Humor</h1>
+        <button class="add-button">+ Adicionar Registro</button>
+
+        <div class="mood-grid">
+        <!-- Cartões de humor -->
+        <div class="mood-card">
+            <div class="card-header">
+            <strong>Manhã</strong>
+            <span>08:30 AM</span>
+            </div>
+            <div class="emoji">😊</div>
+            <p>Me senti bem ao acordar, com energia para o dia</p>
+            <hr />
+            <div class="tags">
+            <span class="tag blue">Energizado</span>
+            <span class="tag green">Feliz</span>
+            </div>
+            <div class="actions">
+            <button class="edit">✏️</button>
+            <button class="delete">🗑️</button>
+            </div>
+        </div>
+
+        <div class="mood-card">
+            <div class="card-header">
+            <strong>Tarde</strong>
+            <span>14:15 PM</span>
+            </div>
+            <div class="emoji">🙂</div>
+            <p>Dia produtivo no trabalho, mas um pouco cansado</p>
+            <hr />
+            <div class="tags">
+            <span class="tag green">Produtivo</span>
+            <span class="tag gray">Cansado</span>
+            </div>
+            <div class="actions">
+            <button class="edit">✏️</button>
+            <button class="delete">🗑️</button>
+            </div>
+        </div>
+
+        <!-- Formulário -->
+        <div class="mood-form">
+            <h2>Adicionar Registro de Humor</h2>
+
+            <div class="emoji-options">
+            <span>😠</span>
+            <span>😟</span>
+            <span>😐</span>
+            <span>😊</span>
+            <span>😄</span>
+            </div>
+
+            <label>Horário</label>
+            <input type="time" />
+
+            <label>Notas</label>
+            <textarea placeholder="Como você está se sentindo?"></textarea>
+
+            <label>Tags</label>
+            <div class="tag-select">
+            <span class="tag gray">Feliz</span>
+            <span class="tag gray">Cansado</span>
+            <span class="tag gray">Estressado</span>
+            <span class="tag gray">Produtivo</span>
+            <span class="tag gray">Ansioso</span>
+            </div>
+
+            <div class="form-actions">
+            <button class="cancel">Cancelar</button>
+            <button class="save">Salvar Registro</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    
+    <div class="container">
+
+        <!-- Seção de Sintomas -->
+        <section>
+        <h2>🩺 Registros de Sintomas</h2>
+        <div class="top-actions">
+            <button class="gray-button">📋 Tipos de Sintoma</button>
+            <button class="blue-button">+ Adicionar Registro</button>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+            <div class="header">
+                <strong>Dor de cabeça</strong>
+                <span>10:15 AM</span>
+            </div>
+            <div class="subtitle">
+                <span class="tag orange">Moderado</span>
+                <span>Duração: 2 horas</span>
+            </div>
+            <p>Dor latejante na região frontal, piorou com luz forte</p>
+            <hr>
+            <div class="tags">
+                <span class="tag red">Dor</span>
+                <span class="tag blue">Cabeça</span>
+            </div>
+            <div class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+            </div>
+            </div>
+
+            <div class="card">
+            <div class="header">
+                <strong>Fadiga</strong>
+                <span>16:30 PM</span>
+            </div>
+            <div class="subtitle">
+                <span class="tag red">Leve</span>
+                <span>Duração: Contínua</span>
+            </div>
+            <p>Cansaço geral, sem energia para atividades</p>
+            <hr>
+            <div class="tags">
+                <span class="tag purple">Fadiga</span>
+                <span class="tag gray">Geral</span>
+            </div>
+            <div class="actions">
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
+            </div>
+            </div>
+        </div>
+        </section>
+
+        <!-- Seção de Medicamentos -->
+        <section>
+        <h2>🌿 Medicamentos</h2>
+        <div class="top-actions">
+            <button class="gray-button">📋 Lista de Medicamentos</button>
+            <button class="green-button">+ Adicionar Registro</button>
+        </div>
+
+        <div class="card">
+            <div class="header">
+            <strong>Paracetamol 500mg</strong>
+            <span>08:00 AM</span>
+            </div>
+            <div class="med-grid">
+            <div>
+                <p><strong>Dose</strong></p>
+                <p>1 comprimido</p>
+            </div>
+            <div>
+                <p><strong>Frequência</strong></p>
+                <p>8/8 horas</p>
+            </div>
+            <div>
+                <p><strong>Início</strong></p>
+                <p>15/06/2023</p>
+            </div>
+            <div>
+                <p><strong>Término</strong></p>
+                <p>20/06/2023</p>
+            </div>
+            </div>
+            <p>Para dor de cabeça moderada</p>
+            <div class="tags">
+            <span class="tag blue">Analgésico</span>
+            </div>
+        </div>
+        </section>
+    </div>
+    </body>
+</html>
